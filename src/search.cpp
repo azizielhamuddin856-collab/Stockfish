@@ -1629,7 +1629,7 @@ Value Search::Worker::qsearch(Position& pos, Stack* ss, Value alpha, Value beta)
 
         // Step 6. Pruning
         if (!is_loss(bestValue))
-        {
+        {if(!ss->inCheck&&bestValue>alpha-200&&capture&&pos.see_ge(move,-30) &&!is_loss(futilityBase)){Value futilityValue=futilityBase+PieceValue[pos.piece_on(move.to_sq())]/2;if(futilityValue<=alpha)continue;}
             // Futility pruning and moveCount pruning
             if (!givesCheck && move.to_sq() != prevSq && !is_loss(futilityBase)
                 && move.type_of() != PROMOTION)
